@@ -1,3 +1,4 @@
 .gradle/
 .idea/
-reports/
+**/reports/
+**/build/

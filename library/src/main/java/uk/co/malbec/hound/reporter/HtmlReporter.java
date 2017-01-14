@@ -38,7 +38,7 @@ public class HtmlReporter implements Reporter {
 
     private JsonBuilderFactory builderFactory = Json.createBuilderFactory(emptyMap());
     private JsonWriterFactory writerFactory = Json.createWriterFactory(map(PRETTY_PRINTING, true));
-    private DecimalFormat decimalFormat = new DecimalFormat("#####0.0000");
+    private DecimalFormat decimalFormat = new DecimalFormat("#####0.00");
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     public HtmlReporter setReportsDirectory(File reportsDirectory) {

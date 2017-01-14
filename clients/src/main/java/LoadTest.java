@@ -38,7 +38,7 @@ public class LoadTest {
 
 
         Hound<GridFsUser> hound = new Hound<GridFsUser>()
-                .shutdownTime(now().plusMinutes(1));
+                .shutdownTime(now().plusMinutes(120));
 
         hound.configureSampler(HybridSampler.class)
                 .setSampleDirectory(new File(reportsDirectory, "data"));
@@ -47,16 +47,16 @@ public class LoadTest {
                 .setReportsDirectory(reportsDirectory)
                 .setDescription("GridFs file upload test")
                 .addBulletPoint("100 users, uploading files every 2 seconds")
-                .addBulletPoint("No WriteConcern set")
+                .addBulletPoint("No write concern set")
                 .addBulletPoint("No replication")
                 .addBulletPoint("Connection timeouts set at 5 seconds")
                 .addBulletPoint("Running on 2.9 Ghz laptop with 16GB of memory and 2Gbit/s SSD disk")
-                .addBulletPoint("Mongo, AppServer and TestClient on single machine")
+                .addBulletPoint("Mongo, application server and test client on single machine")
                 .setExecuteTime(now());
 
         configureOperations(hound);
 
-        range(0, 1).forEach(i -> {
+        range(0, 100).forEach(i -> {
 
             Client client = JerseyClientBuilder.newBuilder()
                     .register(MultiPartFeature.class).build();
