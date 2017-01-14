@@ -5,8 +5,6 @@ import java.io.File;
 import java.io.IOException;
 
 public class Test {
-    static int total = 0;
-    static int count = 0;
 
     public static void main(String[] args) throws IOException {
         new HybridSampler()

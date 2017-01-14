@@ -1,13 +1,12 @@
 package uk.co.malbec.hound.reporter.machinery;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Supplier;
 
 public class DynamicCategoryGroup<CATEGORY, COLLECTOR> implements CategoryGroup<CATEGORY, COLLECTOR> {
 
     private Map<CATEGORY, COLLECTOR> categories = new HashMap<>();
+    private List<CATEGORY> keys = new ArrayList<>();
 
     private COLLECTOR activeCollector;
 
@@ -18,8 +17,8 @@ public class DynamicCategoryGroup<CATEGORY, COLLECTOR> implements CategoryGroup<
     }
 
     @Override
-    public Set<CATEGORY> getKeys() {
-        return categories.keySet();
+    public List<CATEGORY> getKeys() {
+        return keys;
     }
 
     @Override
@@ -28,6 +27,7 @@ public class DynamicCategoryGroup<CATEGORY, COLLECTOR> implements CategoryGroup<
         if (activeCollector == null){
             activeCollector = creator.get();
             categories.put(key, activeCollector);
+            keys.add(key);
         }
 
         return activeCollector != null;

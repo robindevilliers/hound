@@ -205,5 +205,39 @@ $(function () {
         }]
     });
 
+    $('#timeLine').highcharts({
+        chart: {
+            type: 'area'
+        },
+        title: {
+            text: 'Time Lines'
+        },
+        credits: {
+            enabled: false
+        },
+        xAxis: {
+            type: 'datetime',
+            title: {
+                text: 'Time'
+            }
+        },
+        yAxis: {
+            title: {
+                text: 'Average response times (ms)'
+            },
+        },
+        plotOptions: {
+            area: {
+                marker: {
+                    enabled: false,
+                },
+                stacking: 'normal',
+                lineColor: '#666666',
+                lineWidth: 1
+            }
+        },
+        series: responseTimeLines
+    });
+
 
 });

@@ -1,12 +1,12 @@
 package uk.co.malbec.hound.reporter.machinery;
 
-import java.util.Set;
+import java.util.List;
 
 public interface CategoryGroup<CATEGORY, COLLECTOR> extends Referenceable<COLLECTOR> {
 
-    Set<CATEGORY> getKeys();
+    List<CATEGORY> getKeys();
 
-    public boolean apply(CATEGORY key);
+    boolean apply(CATEGORY key);
 
-    public COLLECTOR get(CATEGORY key);
+    COLLECTOR get(CATEGORY key);
 }

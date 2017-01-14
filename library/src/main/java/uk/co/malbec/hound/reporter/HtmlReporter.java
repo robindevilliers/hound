@@ -105,6 +105,7 @@ public class HtmlReporter implements Reporter {
             generateErrorData(reportsDirectory, data.getStatistics(), data.getErrorMessageCategories());
             generateResponseTimeDistributionsData(reportsDirectory, data.getOperationNameCategories(), data.getStatistics());
             generateUserActivityData(reportsDirectory, data.getTimeDistributionCategories());
+            generateTimeLinesData(reportsDirectory, data.getOperationNameCategories(), data.getStatistics());
 
             File fontsDirectory = new File(reportsDirectory, "fonts");
             fontsDirectory.mkdir();
@@ -225,6 +226,50 @@ public class HtmlReporter implements Reporter {
                         .add("distributions", distributions)
                         .build()
         );
+    }
+
+    private void generateTimeLinesData(
+            File reportsDirectory,
+            CategoryGroup<String, Statistics> operationNameCategories,
+            Statistics statistics
+    ) throws Exception {
+
+        JsonArrayBuilder categories = builderFactory.createArrayBuilder();
+
+        for (Long time: statistics.getTimeLineCategories().getKeys()){
+            categories.add(time);
+        }
+
+        JsonArrayBuilder distributions = builderFactory.createArrayBuilder();
+        operationNameCategories.getKeys().forEach(name -> {
+
+            JsonArrayBuilder values = builderFactory.createArrayBuilder();
+
+            for (Long time: operationNameCategories.get(name).getTimeLineCategories().getKeys()){
+                JsonArrayBuilder datum = builderFactory.createArrayBuilder();
+
+                Vector<Sample> samples = operationNameCategories.get(name).getTimeLineCategories().get(time);
+
+                Long totalTime = 0L;
+                Long count = 0L;
+                for (Sample sample: samples.getValues()){
+                    totalTime += time(sample);
+                    count++;
+                }
+
+                datum.add(time);
+                datum.add(count > 0 ? totalTime / count: 0);
+                values.add(datum);
+            }
+
+            distributions.add(
+                    builderFactory.createObjectBuilder()
+                            .add("name", name)
+                            .add("data", values)
+            );
+        });
+
+        writeVariableAsFile(reportsDirectory, "responseTimeLines", distributions.build());
     }
 
     private void generateStatisticsData(File reportsDirectory,

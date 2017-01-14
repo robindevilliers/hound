@@ -1,5 +1,7 @@
 package uk.co.malbec.hound.reporter;
 
+import uk.co.malbec.hound.Sample;
+import uk.co.malbec.hound.reporter.machinery.CategoryGroup;
 import uk.co.malbec.hound.reporter.machinery.Scalar;
 import uk.co.malbec.hound.reporter.machinery.Vector;
 
@@ -19,6 +21,7 @@ public class Statistics {
     private Scalar<Long> minimumTime = scalar(0L);
     private Scalar<Long> maximumTime = scalar(0L);
     private Vector<Long> timeDistributionExcludingOutliers = vector();
+    private CategoryGroup<Long, Vector<Sample>> timeLineCategories;
 
     public Scalar<Long> getTotalTime() {
         return totalTime;
@@ -74,5 +77,13 @@ public class Statistics {
 
     public double getStandardError() {
         return getStandardDeviation() / Math.sqrt(totalCount.getValue());
+    }
+
+    public CategoryGroup<Long, Vector<Sample>> getTimeLineCategories() {
+        return timeLineCategories;
+    }
+
+    public void setTimeLineCategories(CategoryGroup<Long, Vector<Sample>> timeLineCategories) {
+        this.timeLineCategories = timeLineCategories;
     }
 }

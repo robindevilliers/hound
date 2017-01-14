@@ -1,26 +1,26 @@
 package uk.co.malbec.hound.reporter.machinery;
 
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Supplier;
 
 public class LiteralCategoryGroup<CATEGORY, COLLECTOR> implements CategoryGroup<CATEGORY, COLLECTOR> {
 
     private Map<CATEGORY, COLLECTOR> categories = new HashMap<>();
+    private List<CATEGORY> keys = new ArrayList<>();
 
     private COLLECTOR activeCollector;
 
     public LiteralCategoryGroup(Supplier<COLLECTOR> creator, CATEGORY... breakpoints){
         for (CATEGORY breakpoint : breakpoints){
+            keys.add(breakpoint);
             categories.put(breakpoint, creator.get());
         }
     }
 
     @Override
-    public Set<CATEGORY> getKeys() {
-        return categories.keySet();
+    public List<CATEGORY> getKeys() {
+        return keys;
     }
 
     @Override
