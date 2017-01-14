@@ -1,0 +1,32 @@
+apply plugin: 'java'
+apply plugin: 'application'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+version = '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+
+ext {
+    glassfishJerseyVersion = '2.22.1'
+}
+
+dependencies {
+    compile project(":library")
+
+    compile group: 'commons-io', name: 'commons-io', version: '2.5'
+    compile group: 'joda-time', name: 'joda-time', version: '2.9.7'
+    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.7'
+    compile 'javax.json:javax.json-api:1.0'
+    compile group: 'org.glassfish', name: 'javax.json', version: '1.0.4'
+    compile group: 'org.glassfish.jersey.media', name: 'jersey-media-multipart', version: glassfishJerseyVersion
+    compile group: 'org.glassfish.jersey.core', name: 'jersey-client', version: glassfishJerseyVersion
+
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.4'
+}
