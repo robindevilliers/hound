@@ -38,7 +38,7 @@ public class LoadTest {
 
 
         Hound<GridFsUser> hound = new Hound<GridFsUser>()
-                .shutdownTime(now().plusMinutes(120));
+                .shutdownTime(now().plusMinutes(2));
 
         hound.configureSampler(HybridSampler.class)
                 .setSampleDirectory(new File(reportsDirectory, "data"));
@@ -46,7 +46,7 @@ public class LoadTest {
         hound.configureReporter(HtmlReporter.class)
                 .setReportsDirectory(reportsDirectory)
                 .setDescription("GridFs file upload test")
-                .addBulletPoint("100 users, uploading files every 2 seconds")
+                .addBulletPoint("1 users, uploading files every 10 seconds")
                 .addBulletPoint("No write concern set")
                 .addBulletPoint("No replication")
                 .addBulletPoint("Connection timeouts set at 5 seconds")
@@ -110,7 +110,7 @@ public class LoadTest {
                             throw new OperationException("upload file", body);
                         }
                     } finally {
-                        context.schedule(new Transition(GridFsOperationType.GOTO_INDEX_PAGE, now().plusSeconds(1)));
+                        context.schedule(new Transition(GridFsOperationType.GOTO_INDEX_PAGE, now().plusSeconds(10)));
                     }
 
                 });
